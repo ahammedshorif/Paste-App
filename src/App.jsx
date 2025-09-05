@@ -10,7 +10,7 @@ const router = createBrowserRouter(
       {
         path: "/",
         element:
-        <div>
+        <div className="flex flex-col">
             <Navbar></Navbar>
             <Home></Home>
         </div>
@@ -38,7 +38,7 @@ function App() {
   
 
   return (
-    <div className="bg-gray-600 w-full flex justify-center text-amber-50">
+    <div className=" bg-black w-full flex justify-center text-amber-50 h-screen">
       <RouterProvider router={router}>
 
       </RouterProvider>
