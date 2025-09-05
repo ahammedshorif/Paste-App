@@ -17,7 +17,12 @@ function Pastes() {
       dispatch(removeFromPastes(pasteId))
   }  
 
- 
+  function handleCopy(paste){
+     console.log(paste.content);
+     navigator.clipboard.writeText(paste?.content)
+     toast.success("Copy to Clipboard")
+   
+  }
   return (
     <div>
         <input 
@@ -39,7 +44,7 @@ function Pastes() {
                        <div className='flex gap-2'>
                             <button>Edit</button>
                             <button>View</button>
-                            <button onClick={}>Copy</button>
+                            <button onClick={()=> handleCopy(paste)}>Copy</button>
                             <button onClick={()=> handleDelete(paste._id)} className='bg-red-500 rounded-lg p-1 cursor-pointer'>Delete</button>
                             <button>Share</button>
                        </div>
