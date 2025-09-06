@@ -5,73 +5,85 @@ import { removeFromPastes } from '../redux/pasteSlice';
 import toast from 'react-hot-toast';
 import SharePaste from './SharePaste';
 
-import { Copy, Trash,SquarePen,Eye,Share,Calendar} from "lucide-react"
+import { Copy, Trash, SquarePen, Eye, Share, Calendar } from "lucide-react"
 
 function Pastes() {
+  const [searchTerm, setSeachTerm] = useState("")
+  const [openPasteId, setOpenPasteId] = useState(null);
 
-  const [searchTerm,setSeachTerm] = useState("")
-  const [isOpen, setIsOpen] = useState(false);
-  const pastes = useSelector((state)=>state.paste.pastes)
-  console.log(pastes);
+  const pastes = useSelector((state) => state.paste.pastes)
+  const dispatch = useDispatch();
 
-  const dispatch= useDispatch();
   const filtereData = pastes.filter(
-    (paste)=>paste.title.toLowerCase().includes(searchTerm.toLowerCase())
+    (paste) => paste.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  function handleDelete(pasteId){
-      dispatch(removeFromPastes(pasteId))
-  }  
-
-  function handleCopy(paste){
-     console.log(paste.content);
-     navigator.clipboard.writeText(paste?.content)
-     toast.success("Copy to Clipboard")
-   
+  function handleDelete(pasteId) {
+    dispatch(removeFromPastes(pasteId))
   }
 
-   
-    
+  function handleCopy(paste) {
+    navigator.clipboard.writeText(paste?.content)
+    toast.success("Copied to Clipboard")
+  }
+
   return (
     <div className='font-serif'>
-        <input 
+      <input
         className='p-2 rounded-xl min-w-[300px] border-2 md:min-w-[800px] mb-5'
         type="text"
         placeholder='Search here'
         value={searchTerm}
-        onChange={(e)=>{setSeachTerm(e.target.value)}}
-         />
+        onChange={(e) => { setSeachTerm(e.target.value) }}
+      />
 
-        <div className='flex flex-col gap-5'>
-            {
-              filtereData.length>0 && filtereData.map(
-                (paste)=>{
-                  return (
-                    <div key={paste._id} className='border-2 pt-2 px-4 rounded-lg'>
-                       <div className='flex gap-2 justify-end'>
-                            <button><Link to={`/?pasteId=${paste?._id}`}><SquarePen size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer'/></Link></button>
-                            <button> <Link to={`/pastes/${paste?._id}`}><Eye size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /></Link></button>
-                            <button onClick={()=> handleCopy(paste)}><Copy size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer'/></button>
-                            <button onClick={()=> handleDelete(paste._id)} ><Trash size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /> </button>
-                            <button
-                              onClick={() => setIsOpen(true)}>
-                                <Share size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' />
-                            </button>
+      <div className='flex flex-col gap-5'>
+        {filtereData.length > 0 &&
+          filtereData.map((paste) => {
+            return (
+              <div key={paste._id} className='border-2 pt-2 px-4 rounded-lg'>
+                <div className='flex gap-2 justify-end'>
+                  <button>
+                    <Link to={`/?pasteId=${paste?._id}`}>
+                      <SquarePen size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' />
+                    </Link>
+                  </button>
+                  <button>
+                    <Link to={`/pastes/${paste?._id}`}>
+                      <Eye size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' />
+                    </Link>
+                  </button>
+                  <button onClick={() => handleCopy(paste)}>
+                    <Copy size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' />
+                  </button>
+                  <button onClick={() => handleDelete(paste._id)}>
+                    <Trash size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' />
+                  </button>
+                  <button onClick={() => setOpenPasteId(paste._id)}>
+                    <Share size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' />
+                  </button>
 
-                            {isOpen && <SharePaste link={`http://localhost:5173/pastes/${paste._id}`} onClose={() => setIsOpen(false)} />}
-                       </div>
-                       <div className='text-xl font-bold mb-2'>Title: {paste.title}</div>
-                       <div>{paste.content}</div>
-                       <div className='mt-2 pt-2 flex justify-end'> <p className='pr-1'><Calendar size={20} color="#ffffff" strokeWidth={1.25} /></p>{paste.createdAt}</div>
-                    </div>
-                  )
-                }
+                  {/* Only open modal for the clicked paste */}
+                  {openPasteId === paste._id && (
+                    <SharePaste
+                      link={`http://localhost:5173/pastes/${paste._id}`}
+                      onClose={() => setOpenPasteId(null)}
+                    />
+                  )}
+                </div>
 
-              )
-            }
-
-        </div>
-
+                <div className='text-xl font-bold mb-2'>Title: {paste.title}</div>
+                <div>{paste.content}</div>
+                <div className='mt-2 pt-2 flex justify-end'>
+                  <p className='pr-1'>
+                    <Calendar size={20} color="#ffffff" strokeWidth={1.25} />
+                  </p>
+                  {paste.createdAt}
+                </div>
+              </div>
+            )
+          })}
+      </div>
     </div>
   )
 }
