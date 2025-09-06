@@ -27,7 +27,7 @@ function Pastes() {
    
   }
   return (
-    <div>
+    <div className='font-serif'>
         <input 
         className='p-2 rounded-xl min-w-[300px] border-2 md:min-w-[800px] mb-5'
         type="text"
@@ -49,7 +49,7 @@ function Pastes() {
                             <button onClick={()=> handleDelete(paste._id)} ><Trash size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /> </button>
                             <button><Share size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /></button>
                        </div>
-                       <div className='text-xl font-sans font-bold mb-2'>Title: {paste.title}</div>
+                       <div className='text-xl font-bold mb-2'>Title: {paste.title}</div>
                        <div>{paste.content}</div>
                        <div className='mt-2 pt-2 flex justify-end'>{paste.createdAt}</div>
                     </div>

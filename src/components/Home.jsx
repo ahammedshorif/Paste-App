@@ -46,7 +46,7 @@ function Home() {
 
 
   return (
-    <div className="">
+    <div className="font-serif">
       <div className="flex flex-row gap-7 place-content-between">
         <input
           className="p-2 rounded-xl bg-black w-[60%] border-2"
