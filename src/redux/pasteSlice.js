@@ -32,7 +32,6 @@ export const pasteSlice = createSlice({
     },
     removeFromPastes: (state, action) => {
         const paste= action.payload;
-        console.log(paste);
         const index= state.pastes.findIndex((item)=>item._id===paste);
 
         if(index>=0){

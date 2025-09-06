@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { removeFromPastes } from '../redux/pasteSlice';
 import toast from 'react-hot-toast';
+import SharePaste from './SharePaste';
 
 import { Copy, Trash,SquarePen,Eye,Share,Calendar} from "lucide-react"
 
 function Pastes() {
+
   const [searchTerm,setSeachTerm] = useState("")
+  const [isOpen, setIsOpen] = useState(false);
   const pastes = useSelector((state)=>state.paste.pastes)
   console.log(pastes);
 
@@ -26,6 +29,9 @@ function Pastes() {
      toast.success("Copy to Clipboard")
    
   }
+
+   
+    
   return (
     <div className='font-serif'>
         <input 
@@ -47,7 +53,12 @@ function Pastes() {
                             <button> <Link to={`/pastes/${paste?._id}`}><Eye size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /></Link></button>
                             <button onClick={()=> handleCopy(paste)}><Copy size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer'/></button>
                             <button onClick={()=> handleDelete(paste._id)} ><Trash size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /> </button>
-                            <button><Share size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /></button>
+                            <button
+                              onClick={() => setIsOpen(true)}>
+                                <Share size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' />
+                            </button>
+
+                            {isOpen && <SharePaste link={`http://localhost:5173/pastes/${paste._id}`} onClose={() => setIsOpen(false)} />}
                        </div>
                        <div className='text-xl font-bold mb-2'>Title: {paste.title}</div>
                        <div>{paste.content}</div>
