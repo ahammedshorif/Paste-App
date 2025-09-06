@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { removeFromPastes } from '../redux/pasteSlice';
 import toast from 'react-hot-toast';
 
-import { Copy, Trash,SquarePen,Eye,Share} from "lucide-react"
+import { Copy, Trash,SquarePen,Eye,Share,Calendar} from "lucide-react"
 
 function Pastes() {
   const [searchTerm,setSeachTerm] = useState("")
@@ -51,7 +51,7 @@ function Pastes() {
                        </div>
                        <div className='text-xl font-bold mb-2'>Title: {paste.title}</div>
                        <div>{paste.content}</div>
-                       <div className='mt-2 pt-2 flex justify-end'>{paste.createdAt}</div>
+                       <div className='mt-2 pt-2 flex justify-end'> <p className='pr-1'><Calendar size={20} color="#ffffff" strokeWidth={1.25} /></p>{paste.createdAt}</div>
                     </div>
                   )
                 }
