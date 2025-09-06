@@ -16,7 +16,7 @@ function Home() {
         title:title,
         content:value,
         _id:pasteId || Date.now().toString(35),
-        createdAt: new Date().toISOString(),
+        createdAt: new Date().toLocaleString(),
 
       }
 
