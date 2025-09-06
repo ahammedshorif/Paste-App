@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { removeFromPastes } from '../redux/pasteSlice';
 import toast from 'react-hot-toast';
 
+import { Copy, Trash,SquarePen,Eye,Share} from "lucide-react"
+
 function Pastes() {
   const [searchTerm,setSeachTerm] = useState("")
   const pastes = useSelector((state)=>state.paste.pastes)
@@ -39,17 +41,17 @@ function Pastes() {
               filtereData.length>0 && filtereData.map(
                 (paste)=>{
                   return (
-                    <div key={paste._id} className='border-2 p-4 rounded-lg'>
-                       <div>{paste.title}</div>
-                       <div>{paste.content}</div>
-                       <div className='flex gap-2'>
-                            <button><Link to={`/?pasteId=${paste?._id}`}>Edit</Link></button>
-                            <button> <Link to={`/pastes/${paste?._id}`}>View</Link></button>
-                            <button onClick={()=> handleCopy(paste)}>Copy</button>
-                            <button onClick={()=> handleDelete(paste._id)} className='bg-red-500 rounded-lg p-1 cursor-pointer'>Delete</button>
-                            <button>Share</button>
+                    <div key={paste._id} className='border-2 pt-2 px-4 rounded-lg'>
+                       <div className='flex gap-2 justify-end'>
+                            <button><Link to={`/?pasteId=${paste?._id}`}><SquarePen size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer'/></Link></button>
+                            <button> <Link to={`/pastes/${paste?._id}`}><Eye size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /></Link></button>
+                            <button onClick={()=> handleCopy(paste)}><Copy size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer'/></button>
+                            <button onClick={()=> handleDelete(paste._id)} ><Trash size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /> </button>
+                            <button><Share size={20} color="#ffffff" strokeWidth={1.25} className='cursor-pointer' /></button>
                        </div>
-                       <div>{paste.createdAt}</div>
+                       <div className='text-xl font-sans font-bold mb-2'>Title: {paste.title}</div>
+                       <div>{paste.content}</div>
+                       <div className='mt-2 pt-2 flex justify-end'>{paste.createdAt}</div>
                     </div>
                   )
                 }
