@@ -27,7 +27,7 @@ function Pastes() {
   return (
     <div>
         <input 
-        className='p-2 rounded-xl min-w-[300px] border-2 md:min-w-[700px] mb-5'
+        className='p-2 rounded-xl min-w-[300px] border-2 md:min-w-[800px] mb-5'
         type="text"
         placeholder='Search here'
         value={searchTerm}

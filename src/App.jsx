@@ -10,7 +10,7 @@ const router = createBrowserRouter(
       {
         path: "/",
         element:
-        <div className="flex flex-col">
+        <div className=" w-[90%] md:max-w-[800px] flex flex-col">
             <Navbar></Navbar>
             <Home></Home>
         </div>
@@ -18,7 +18,7 @@ const router = createBrowserRouter(
       {
         path: "/pastes",
         element: 
-        <div>
+        <div className="w-[90%] md:max-w-[800px]">
            <Navbar></Navbar>
            <Pastes></Pastes>
         </div>
@@ -26,7 +26,7 @@ const router = createBrowserRouter(
       {
         path: "pastes/:pasteId",
         element: 
-        <div>
+        <div className="w-[90%] md:max-w-[800px]">
            <Navbar></Navbar>
            <ViewPaste></ViewPaste>
         </div>
