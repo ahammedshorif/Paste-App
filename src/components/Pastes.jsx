@@ -66,7 +66,7 @@ function Pastes() {
                   {/* Only open modal for the clicked paste */}
                   {openPasteId === paste._id && (
                     <SharePaste
-                      link={`http://localhost:5173/pastes/${paste._id}`}
+                      link={`${window.location.origin}/pastes/${paste._id}`}
                       onClose={() => setOpenPasteId(null)}
                     />
                   )}
