@@ -24,7 +24,7 @@ const router = createBrowserRouter(
         </div>
       },
       {
-        path: "/:pasteId",
+        path: "pastes/:pasteId",
         element: 
         <div>
            <Navbar></Navbar>
@@ -38,7 +38,7 @@ function App() {
   
 
   return (
-    <div className=" bg-black w-full flex justify-center text-amber-50 h-screen">
+    <div className=" bg-black w-full flex justify-center text-amber-50 min-h-screen">
       <RouterProvider router={router}>
 
       </RouterProvider>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { removeFromPastes } from '../redux/pasteSlice';
 import toast from 'react-hot-toast';
@@ -42,8 +43,8 @@ function Pastes() {
                        <div>{paste.title}</div>
                        <div>{paste.content}</div>
                        <div className='flex gap-2'>
-                            <button>Edit</button>
-                            <button>View</button>
+                            <button><Link to={`/?pasteId=${paste?._id}`}>Edit</Link></button>
+                            <button> <Link to={`/pastes/${paste?._id}`}>View</Link></button>
                             <button onClick={()=> handleCopy(paste)}>Copy</button>
                             <button onClick={()=> handleDelete(paste._id)} className='bg-red-500 rounded-lg p-1 cursor-pointer'>Delete</button>
                             <button>Share</button>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { addToPastes, updateToPastes } from "../redux/pasteSlice";
 
@@ -7,19 +7,21 @@ function Home() {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const PasteId = searchParams.get("pasteId");
+  const pasteId = searchParams.get("pasteId");
   const dispatch= useDispatch();
+  const allPastes = useSelector((state)=> state.paste.pastes)
 
   function createPaste(){
       const paste = {
         title:title,
         content:value,
-        _id:PasteId || Date.now().toString(35),
+        _id:pasteId || Date.now().toString(35),
         createdAt: new Date().toISOString(),
 
       }
 
-      if(PasteId){
+
+      if(pasteId){
           //update paste
           dispatch(updateToPastes(paste))
       }
@@ -33,11 +35,21 @@ function Home() {
       setValue("")
       setSearchParams("")
   }
+
+  useEffect(()=>{
+         if(pasteId){
+            const paste = allPastes.find((p)=>p._id===pasteId);
+            setTitle(paste.title)
+            setValue(paste.content)
+         }
+      },[pasteId])
+
+
   return (
     <div className="">
       <div className="flex flex-row gap-7 place-content-between">
         <input
-          className="p-2 rounded-2xl bg-black w-[60%] border-2"
+          className="p-2 rounded-xl bg-black w-[60%] border-2"
           type="text"
           placeholder="Enter title here"
           value={title}
@@ -45,8 +57,8 @@ function Home() {
             setTitle(e.target.value);
           }}
         />
-        <button className="bg-blue-400 cursor-pointer p-2 rounded-2xl" onClick={createPaste}>
-          {PasteId ? "Update Paste" : "Create Paste"}
+        <button className="bg-blue-400 cursor-pointer p-2 rounded-xl" onClick={createPaste}>
+          {pasteId ? "Update Paste" : "Create Paste"}
         </button>
       </div>
       <div>
